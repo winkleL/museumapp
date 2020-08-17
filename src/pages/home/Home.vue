@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <home-header :city="city"/>
+    <home-header/>
     <home-swiper :list="swiperList"/>
     <home-icons :list="iconList"/>
     <recommend-icons :list="recommendList"/>
@@ -13,14 +13,15 @@ import HomeSwiper from './components/swiper.vue'
 import HomeIcons from './components/icons.vue'
 import RecommendIcons from './components/recom.vue'
 import axios from 'axios'
+import {mapState} from 'vuex'
 export default {
   name: 'Home',
   data(){
     return {
-      city:'',
       swiperList:[],
       iconList:[],
-      recommendList:[]
+      recommendList:[],
+      lastCity:''
     }
   },
   components: {
@@ -31,23 +32,32 @@ export default {
   },
   methods:{
     getHomeInfor(){
-      axios.get('/api/index.json')
+      axios.get('/api/index.json?city='+this.city)
            .then(this.getHomeInforSucc)
     },
     getHomeInforSucc(res){
       res=res.data;
       if(res.ret&&res.data){
         const data=res.data;
-        this.city=data.city;
+        // this.city=data.city;
         this.swiperList=data.swiperList;
         this.iconList=data.iconList;
         this.recommendList=data.recommendList;
       }
-      console.log(res)
     }
   },
   mounted(){
     this.getHomeInfor()
+    this.lastCity=this.city;
+  },
+  computed:{
+    ...mapState(['city'])
+  },
+  activated(){
+    if(this.lastCity!==this.city){
+      this.getHomeInfor();
+      this.lastCity=this.city
+    }
   }
 }
 </script>
