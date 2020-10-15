@@ -1,6 +1,6 @@
 # museumapp
 
-> A Vue.js project for people who like museum exhibitions
+“去哪儿”风格的博物馆展览合集，用于浏览当地特色展览等
 
 ## Build Setup
 
