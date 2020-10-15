@@ -1,6 +1,6 @@
 # museumapp
 
-> A Vue.js project
+> A Vue.js project for people who like museum exhibitions
 
 ## Build Setup
 
